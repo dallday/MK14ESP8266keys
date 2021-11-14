@@ -2,6 +2,11 @@
 
 This folder contains the arduino IDE sketch to make use of the MK14keysCP PCB board and provide a webserver to load files onto an attached MK14.
 
+The webserver can connect to a wifi network if a SSID and password has been previously given to it.\
+Else it will create it's own WAP using ip address 192.168.8.1\
+The WAP has an SSID of **ESP8266MK14keys** and the password is **password**.\
+You can connect to that WAP and use it as is or you can supply it with a new SSID and password to connect to.
+
 The sketch is broken down into a number of files to make it easier to understand and modify.
 
 It uses a number of libraries that you may need to download to get it to work.
@@ -24,6 +29,7 @@ For my ESP8266 development board (ESP8266 LOLIN v3) I selected the Arduino IDE b
 
 * It comes up very small on a mobile device and I've yet to work out the best way to make it look better on a mobile device.
 
+It sends a lot of debug info out to the serial port at 115200 some of which may be useful if it does not work.
 
 Hope this is of some use. \
 Enjoy and stay safe 
