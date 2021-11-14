@@ -8,6 +8,8 @@ There are pdf and png images of the board plus the zipped kicad and gerber files
 
 * *note* The version of kicad changed during the creation of this pcb so there are some "rescue" files in the kicad folder which I'm not sure if they are needed as some of the footprints etc., are from the earlier libraries.
 
+Mod 1 schema - shows the addition of 2 leds to provide basic status information on the wifi, whether it has connected to the wifi or had created a Wireless Access Point (WAP). 
+
 Hope this is of some use. \
 Enjoy and stay safe 
 
