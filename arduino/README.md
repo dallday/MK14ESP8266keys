@@ -18,6 +18,13 @@ Don't think I've missed any but let me know if I have.
 
 For my ESP8266 development board (ESP8266 LOLIN v3) I selected the Arduino IDE board "NodeMCU 1.0 (ESP-12E Module)" from the tools->board menu.
 
+**ISSUES**
+
+* It is supposed to respond to mk14keys.local by using the MDNS from ESP8266mDNS, but I've not managed to get that to work as yet.
+
+* It comes up very small on a mobile device and I've yet to work out the best way to make it look better on a mobile device.
+
+
 Hope this is of some use. \
 Enjoy and stay safe 
 
