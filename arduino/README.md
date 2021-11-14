@@ -4,8 +4,9 @@ This folder contains the arduino IDE sketch to make use of the MK14keysCP PCB bo
 
 The webserver can connect to a wifi network if a SSID and password has been previously given to it.\
 Else it will create it's own WAP using ip address 192.168.8.1\
-The WAP has an SSID of **ESP8266MK14keys** and the password is **password**.\
-You can connect to that WAP and use it as is or you can supply it with a new SSID and password to connect to.
+The WAP has an SSID of **ESP8266MK14keys** and the password is **mynetwork**.\
+You can connect to that WAP and use it as is or you can supply it with a new SSID and password to connect to.\
+You need to reboot to get it to use the new SSID.
 
 The sketch is broken down into a number of files to make it easier to understand and modify.
 
