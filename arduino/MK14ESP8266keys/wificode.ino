@@ -84,11 +84,7 @@ void IOT(){
       Serial.println("ssid: '"+string_Ssid+"'");
       Serial.println("Password:'"+string_Password+"'");
       //configuring conection parameters, and connecting to the WiFi router
-      if (WiFi.begin(string_Ssid, string_Password)){
-        Serial.println("Failure in WIFI.Begin - switching to WAP");
-        WAP();
-        return;
-      }
+      WiFi.begin(string_Ssid, string_Password);
       int onoff=0; // used to pulse the LED
       int waitxchecks=20;      // number of times to check status before giving up
 
