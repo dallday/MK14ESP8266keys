@@ -2,17 +2,19 @@
 
 A MK14 keys interface using Charlieplexing and a web interface.
 
+**History**\
 There has been a number of designs to use a Raspberry Pi or Arduino to “press” the keys on the MK14, making it quick and easy to load programs into it’s limited memory.
 
 see https://www.vintage-radio.net/forum/showthread.php?t=175912
 
 I wanted to use an ESP8266 to operate the keys interface for the MK14, as this has an internal “file”  area to hold the hex files and a web server to allow control from a mobile etc.
 
+**The PCB design**\
 The interface as defined needed 13 lines to control the optical relays. Optical relays were used so there was no direct connection made between the controlling device and the MK14. The problem was that the ESP8266 really only has 7 useable lines.
 
 Having looked at Charlieplexing for LEDs it seems it is possible to control the 13 optical relays with 7 lines. The ESP8266 just about has 7 pins that can be used as output. In fact the new design actually uses 16 optical relays. There are 14 that allow it to simulate all of the column and row cross overs.  The other 2 optical relays are used to handle the reset switch.\
-U5 is used when you connect flying leads to the reset capacitor on the original MK14 boards.\
-U6 is used if using the newer replica Issue VI boards where the reset is present on the edge connector.\
+Chip U5 is used when you connect flying leads to the reset capacitor on the original MK14 boards.\
+Chip U6 is used if using the newer replica Issue VI boards where the reset is present on the edge connector.\
 You can populate either U5 or U6, or both if you want to switch between board types. This was simpler than trying to sort out jumpers to switch between the different reset options and my experiments showed it was capable of driving both optical relays.
 
 The PCB is designed to allow either an Arduino nano or a NodeMCU-ESP8266 to control the optical relays.\
@@ -24,6 +26,9 @@ There are a number of  programs to use with the system.
 
 **MK14ESP8266keys**
 * The ESP8266 based web server which can “program” the MK14 using “hex” files loaded into the ESP8266 file store, and it’s all done on the web. See separate document on this program.
+
+A demo of the ESP8266 web pages are at http://www.saturn5.force9.co.uk/mk14program \
+These are just to show what the web pages look like - there is no processing behind them.
 
 There is a short video demostrating the web server https://www.youtube.com/watch?v=Oq6K6SKH3e0
 
