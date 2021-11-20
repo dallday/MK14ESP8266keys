@@ -12,7 +12,7 @@
 /*The WAP() function configures and calls all functions and
  * variables needed for creating a WiFi Access Poit
  *
- *seems password can be blank but not too short :)
+ *seems password can be blank but not too short :) think it must be 8 characters 
  *
  */
  

@@ -89,7 +89,11 @@ bool debugMode = false;
 #include <FS.h>   // Include the SPIFFS library 
                   // This allows us to use the SPIFFS file system
 
-#define versionNumber 2
+#define versionNumber 3
+// update - version 2 - first release onto github
+// update - version 3 
+//  combines all normal <head> entries to use routine
+//  
 
 byte WAPMode=0; // set to 1 if in WAP mode
 
@@ -108,7 +112,7 @@ DoubleResetDetect drd(DRD_TIMEOUT, DRD_ADDRESS);
 
 // end of Double Reset Detect setup 
 
-#define doGetInterval 30000   // do something about every  30 seconds
+#define doGetInterval 60000   // do something about every  60 seconds
 // global variables 
 
 unsigned long previousMillis; // previous number of milli seconds for doGetInterval
@@ -152,10 +156,10 @@ void setup() {
   Serial.begin(115200);
   delay(100); // delay 100ms to sensure serial working 
   
-  pinMode(STATUSLED, INPUT); // input mode means both LEDS lit
+  pinMode(STATUSLED, INPUT); // input mode should means both LEDS lit
 
   Serial.println();
-  Serial.print("ver ");
+  Serial.print("MK14ESP8266keys version ");
   Serial.println(versionNumber);
 
   // set the pins for the MK14 programming side
@@ -181,7 +185,7 @@ void setup() {
 
   SPIFFS.begin();  // Start the SPI Flash Files System
   
-  // define pages to be nandled by the webserver
+  // define pages to be handled by the webserver
   // handle the main page 
   webServer.on("/", sendMainPage);
   // the page that handles the request to process a file
@@ -191,10 +195,10 @@ void setup() {
 
   // handle a request to upload by sending the form to fill in
   webServer.on("/upload", HTTP_GET, sendUploadform);
-  // handles the upload form returning - using inline procedures :)
+  // handles the upload form returning 
   // handleFileUpload is called first to actually store the file
   // handleFileUploadComment is called second to handle to rest of the form stuff.
-  webServer.on("/upload", HTTP_POST,                       // if the client posts to the upload page
+  webServer.on("/uploadfile", HTTP_POST,                       // if the client posts to the upload page
     handleFileUploadComment ,                          // Handles the web page post stuff after file has loaded
     handleFileUpload                                    // Receive and save the file
   );
@@ -211,36 +215,45 @@ void setup() {
   // handle the recover page response
   webServer.on("/restore",HTTP_GET,restoreFile);
   
+  // handle request for the keystrokes form - dispalys keypad
+  webServer.on("/keystrokes",HTTP_GET, sendKeyStrokes);
+  // handle characters sent from the keystrokes form
+  webServer.on("/sendchars",HTTP_GET,sendSendChars);
+
+  // returns 0 or 1 depending upon the jumper setting on the PCB
+  // part of the AJAX processing
+  webServer.on("/getosver",HTTP_GET,sendosver);
+
+  // send the favicon - see zimage.ino file currently a beer glass
+  webServer.on("/favicon.ico",HTTP_GET,sendFavIcon);
 
   // handle a request to set the SSID
   webServer.on("/setssid", HTTP_GET,sendSSIDformstart);
   // handle the SSID form and store the SSID and password.
   webServer.on("/submitssid", HTTP_POST, processSSIDform);
 
-  webServer.on("/favicon.ico",HTTP_GET,sendFavIcon);
-
   
   // If the client requests any URI not covered by the ones above 
-  // check if the file exits and send it or a 404 response
-  // TODO - limit the files to the ones we want to load :)
+  // check if the file exists and send it or a 404 response
+  // Note = the handleFileRead can limit the typw of files to the ones we want to load :)
   webServer.onNotFound([]() {                              
     if (!handleFileRead(webServer.uri()))                     // send it if it exists
       webServer.send(404, "text/plain", "404: Not Found"); // otherwise, respond with a 404 (Not Found) error
   });
 
-   // example of using inload proc
-   //  webServer.on("/inline", []() {
-   //   webServer.send(200, "text/plain", "this works as well");
+  // example of using inload proc
+  //  webServer.on("/inline", []() {
+  //   webServer.send(200, "text/plain", "this works as well");
   // });
  
   // start the webserver on port 80
   webServer.begin();
-
   Serial.println("HTTP Server started");
   
   // Print the current server IP address - so we know it ?
+  // will be printed every x seconds from the main loop
   printIPaddress();
-  
+ 
 
 }
 

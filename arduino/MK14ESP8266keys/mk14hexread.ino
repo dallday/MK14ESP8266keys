@@ -93,7 +93,9 @@ int processHexLine(File hexFile) {
   // returns 0 if all okay
   // return >0 if issue 
   //   put message in hexmessage String 
-  //
+  // TODO - handle if address continues from previous call
+  //     ?? how to know if we are starting a new file that just happens to start at that point
+  //     
   
     int currentByte=0;
     int currentPosition=0;
@@ -115,12 +117,16 @@ int processHexLine(File hexFile) {
     
     static int previousEndAddress=0;
 
-    int MK14_OS; // set to determine which MK14 OS to output to 
+    int MK14_OS; // set to determine which MK14 OS to output to set after line check
 
-    // reads characters from serial
+    // reads characters from file
     //  until 
+    //  end of file
     //  LF 0x10 is found
-    //  max line stored is MAXHEXLINE bytes - rest is discarded 
+    //    MAXHEXLINE characters are stored in hexLine - rest is discarded 
+    //    This should cover even the largest HEX file line
+    //     I've put some comments after the hex lines in some files.
+    //
     
     currentPosition=0;
     currentByte=0;
@@ -207,8 +213,12 @@ int processHexLine(File hexFile) {
           if (lineLength>0){
             // only send address if there is some data on the line - not sure about this ?
             // send address first 
-            previousEndAddress=addressFull;
-            mk14EnterAddress(addressFull,MK14_OS);
+            // this test should work but not tested yet
+            //if (previousEndAddress!=addressFull){
+            if (true) {// dummy test whilst thinking about the above test
+              previousEndAddress=addressFull;
+              mk14EnterAddress(addressFull,MK14_OS);
+            }
             mk14EnterDataMode();
             
             // now handle all the data

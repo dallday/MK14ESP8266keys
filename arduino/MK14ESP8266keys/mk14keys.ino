@@ -212,10 +212,11 @@ void mk14Setup(){
   // set the low values before setting output
   mk14ClearLEDRows();
   
-  // just for info at present  
+  // just for info at this point - will be checked for each send :)
   int MK14_OS = mk14GetOS(); // Determine which MK14 OS to output to.
-  Serial.print("MK14_OS is ");
-  Serial.println(MK14_OS);
+  // display is in the routine mk14GetOS
+  //Serial.print("MK14_OS is ");
+  // Serial.println(MK14_OS);
 
 }
 
@@ -306,16 +307,20 @@ void mk14GoAddress(int addressval,int mk14OS){
 
 
 int mk14GetOS(){
+  //
+  // read the relevant analog input pin
+  // set to 1 if result > 100
+  // 
   
   pinMode(MK14_OS_Select,INPUT);
   // do an analog read and then check if greater than 100  to set mk14_OS to 1
   int sensorValue = analogRead(MK14_OS_Select);
   Serial.print("sensorValue is ");
-  Serial.println(sensorValue);
+  Serial.print(sensorValue);
   int mk14_OS = ( sensorValue > 100 ); // Determine which MK14 OS to output to.
-  Serial.print("MK14_OS is ");
+  Serial.print(" MK14_OS set to ");
   Serial.println(mk14_OS);
-  return (sensorValue > 100);
+  return (mk14_OS);
 
 }
 
